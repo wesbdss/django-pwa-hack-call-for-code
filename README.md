@@ -1,0 +1,1 @@
+# django-pwa-hack-call-for-code
