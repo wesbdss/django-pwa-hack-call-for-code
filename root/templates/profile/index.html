@@ -1,0 +1,118 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<!--  -->
+
+<style>
+    body {
+        background-color: #E1E1E1;
+    }
+</style>
+<div class="container" style="background-color: #E1E1E1;">
+    <div class="row py-5">
+        <div class="col-3 col-md-1">
+            <img class="rounded-circle" style="max-height: 12vh;" src={% static "images/avatar.jpg" %} alt="">
+        </div>
+        <div class="col-6 col-md-8 my-auto">
+            <h5 class="mb-0">{{request.user.username}}</h5>
+            {{request.user.email}}
+        </div>
+        <div class="col-3 text-end my-auto">
+            <a href={% url "root:logout" %}><i class="fas fa-sign-out-alt fa-2x" style="color:#1E8C8D" ></i></a>
+        </div>
+    </div>
+    <!--  -->
+    <div class="  row  justify-content-center">
+        <h3 class="mr-5">Cotação</h3>
+        <div class="row text-white  mb-3 px-0" style="max-width: 90vw; background-color: #1E8C8D; border-radius: 20px;">
+            <div class="col-3">
+                <div class=" mt-2 mb-2 text-center" style=" font-size: 2rem; background-color: #18C262; border-radius: 15px; ">
+                    €
+                </div>
+            </div>
+            <div class="col-5 my-auto">
+                <div class="px-0 ">
+                    <div class='pb-1'><strong>CFI2Z1</strong>/CO2</div>
+                    <div class="nowrap">Unidade: {{content.unidade}}</div>
+
+                </div>
+            </div>
+            <div class="col-4 my-auto">
+                <div class="px-0 ">
+                    <div class="pb-1 nowrap" style=" font-size: 1.2rem;">€{{content.value}}</div>
+                    <div class="nowrap" style="color: #0AE570;">+{{content.variancia}}</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--  -->
+        <div class=" row text-white mb-3 " style="
+        max-width: 90vw; 
+        background-color: #1E8C8D; 
+        border-radius: 20px; 
+        background-image: url({% static '/images/bg.png' %}); 
+        background-repeat:no-repeat; 
+        background-position: center right;">
+            <div class="row ">
+                <div class="mt-4 pb-0 " style="opacity: .71; ">
+                    carbono sequestrado
+                </div>
+            </div>
+            <div class="row ">
+                <div class=" px-2 pt-0 ">
+                    <span style="font-size: 3rem;opacity: .71; ">
+                        {% if content.result %} {{ content.result.tonelada }} {% else %}1{% endif %}
+                        </span> <span class='align-text-bottom' style="opacity: .71; ">toneladas de CO2 por ano</span>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="px-2 mb-0 pb-0 " style=" font-size: 3rem; ">
+                    €{% if content.result %}{{content.result.valormes}} {% else %} {{content.value}} {% endif %}
+                </div>
+            </div>
+            <div class="row ">
+                <div class="card-body px-4 mt-0 pt-0 " style="opacity: .71; ">por mês de crédito CO2</div>
+            </div>
+        </div>
+
+        <!--  -->
+
+        <div class="row text-dark mb-3 " style="max-width: 90vw;">
+            <div class="col-4 text-center"> <button class="btn btn-outline-dark rounded-pill" style="font-size: .8em;"> Vender CO2</button></div>
+            <div class="col-4 text-center"> <button class="btn btn-outline-dark rounded-pill" style="font-size: .8em;"> Soliciar Avaliador</button></div>
+            <div class="col-4 text-center"> <button class="btn btn-outline-dark rounded-pill" style="font-size: .8em;"> Comprar CO2</button></div>
+        </div>
+
+        <!--  -->
+
+        <div class="row text-dark mb-3" style="max-width: 90vw;">
+            <form action="/" method="get">
+                <div class="fw-bold p-0 mb-1">Calcule o carbono sequestrado por hectare</div>
+                <select class="form-select mb-3 " name="cultivo" aria-label="Default select example">
+                <option selected>Tipo de Cultivo</option>
+                {% if content.cultivo %}
+                  {% for c in content.cultivo %}
+                  <option value="{{c.id}}">{{c.name}}</option>
+                  {% endfor %}
+                {% endif %}
+                
+              </select>
+                <div class="text-center my-1 mb-3">ou</div>
+                <select class="form-select mb-3" name="floresta" aria-label="Default select example">
+                <option selected>Tipo de floresta</option>
+                {% if content.floresta %}
+                  {% for f in content.floresta %}
+                  <option value="{{f.id}}">{{f.name}}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+
+                <input class="form-control mb-3" type="number" name="hectares" placeholder="Digite a Quantidade de Hectares" aria-label="default input example">
+                <div class='mb-3'>
+                    <button type="submit" class="btn btn-success rounded-pill form-control p-1" style="background-color: #0AE570;">Calcular</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
