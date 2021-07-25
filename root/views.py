@@ -58,15 +58,21 @@ def homepage(request):
         }
 
     kg_mes = None
-    print(request.GET.get("cultivo"),request.GET.get("floresta"),request.GET.get("hectares"))
-    if request.GET.get("cultivo") and request.GET.get("hectares"):
-        cultivo = Cultivo.objects.get(pk=request.GET.get("cultivo"))
-        # quilo hectar mes
-        kg_mes = (cultivo.fitomassa/cultivo.plha)*float(request.GET.get("hectares"))
-    elif request.GET.get("floresta") and request.GET.get("hectares"):
-        floresta = Foresta.objects.get(pk=request.GET.get("floresta"))
-        kg_mes = floresta.kgco2
-
+    try:
+        print(request.GET.get("cultivo"),request.GET.get("floresta"),request.GET.get("hectares"))
+        if int(request.GET.get("cultivo")) and int(request.GET.get("hectares")):
+            cultivo = Cultivo.objects.get(pk=request.GET.get("cultivo"))
+            # quilo hectar mes
+            kg_mes = cultivo.kgco2*float(request.GET.get("hectares"))
+    except Exception as ex:
+        pass
+    try:
+        if int(request.GET.get("floresta")) and int(request.GET.get("hectares")):
+            floresta = Foresta.objects.get(pk=request.GET.get("floresta"))
+            kg_mes = floresta.kgco2*float(request.GET.get("hectares"))
+    except Exception as ex:
+        pass
+  
 
 
 
@@ -84,8 +90,8 @@ def homepage(request):
     content["cultivo"]=Cultivo.objects.all()
     if kg_mes:
         content['result'] = {
-            "tonelada":"%.2f" % (kg_mes*10000),
-            "valormes":"%.2f" % (kg_mes*10000*content.get("value"))
+            "tonelada":"%.2f" % (kg_mes/1000),
+            "valormes":"%.2f" % ((kg_mes/1000)*content.get("value"))
         }
     return render(request,'profile/index.html',{"content": content})
 

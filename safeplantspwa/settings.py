@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-=2!s*#aou_$10@pom19&ww6gz-vk50c@r!33%ia$l&@lei^f+5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','c3b188aeb0d1.ngrok.io']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','d580eaffa73d.ngrok.io']
 
 
 # Application definition
@@ -132,6 +132,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'root/static/js', 'serviceworker.js')
 
 
 PWA_APP_NAME = 'Safe Plants Carbon'
@@ -141,17 +142,16 @@ PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'
 PWA_APP_SCOPE = '/'
 PWA_APP_ORIENTATION = 'any'
-PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {
-        'src': '/static/icons/icons-160x160.png',
+        'src': '/static/images/splash.png',
         'sizes': '160x160'
     }
 ]
 PWA_APP_ICONS_APPLE = [
     {
-        'src': '/static/images/my_apple_icon.png',
+        'src': '/static/icons/icons-160x160.png',
         'sizes': '160x160'
     }
 ]
@@ -163,4 +163,3 @@ PWA_APP_SPLASH_SCREEN = [
 ]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'root/static/js', 'serviceworker.js')
